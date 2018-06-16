@@ -11,14 +11,14 @@ namespace Autoservice.Classes
         public Car.Car Car { get; }
 
         private readonly Thread clientThread;
-        private int treshold;
+        private readonly int treshold;
         private bool clientActive;
 
         public Client(Car.Car car)
         {
             Car = car;
             clientThread = new Thread(Act);
-            Random r = new Random(DateTime.Now.Date.DayOfYear + 100);
+            var r = new Random(DateTime.Now.Date.DayOfYear + 100);
             Thread.Sleep(20);
             treshold = r.Next(0, 70) / 10 + 1;
             clientThread.Start();

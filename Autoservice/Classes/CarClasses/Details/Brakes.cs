@@ -1,18 +1,17 @@
 ﻿using System;
 using Autoservice.Enums;
 
-namespace Autoservice.Classes.Car.Details
+namespace Autoservice.Classes.CarClasses.Details
 {
-    public class Chassis : Detail
+    public class Brakes : Detail
     {
-        public Chassis() : base(DetailType.Chassis)
+        public Brakes() : base(DetailType.Brakes)
         {
-
         }
 
         public override Detail Clone()
         {
-            return new Chassis
+            return new Brakes
             {
                 Flaw = Flaw,
                 R = R,

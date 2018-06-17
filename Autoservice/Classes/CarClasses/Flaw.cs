@@ -2,7 +2,7 @@
 using System.Threading;
 using Autoservice.Enums;
 
-namespace Autoservice.Classes.Car
+namespace Autoservice.Classes.CarClasses
 {
     /// <summary>
     /// Класс для поломок.

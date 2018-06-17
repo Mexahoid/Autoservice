@@ -17,7 +17,7 @@ namespace Autoservice.Classes.Drawing
         
         private MainFormDrawingManager()
         {
-            drawers = new List<IDrawable>();
+            Drawers = new List<IDrawable>();
         }
 
         public static MainFormDrawingManager GetInstance()
@@ -39,26 +39,25 @@ namespace Autoservice.Classes.Drawing
             if (drawer == null)
                 return;
             IDrawable drw = new MaintenanceServiceDrawer(drawer, x, y);
-            drawers.Add(drw);
+            Drawers.Add(drw);
         }
 
         public bool TryAddService(int x, int y)
         {
             //if(x - 60 < 30 || y - 60 < 30 || x + 60 > 380 || y + 60 > 270)
                 //return false;
-            return !drawers.Any(drawable => drawable.IsInterfere(x, y));
+            return !Drawers.Any(drawable => drawable.IsInterfere(x, y));
         }
 
         public int FindMaintenanceByPointer(int x, int y)
         {
-            for (int i = 0; i < drawers.Count; i++)
+            for (int i = 0; i < Drawers.Count; i++)
             {
-                if (drawers[i].IsPointerIn(x, y))
+                if (Drawers[i].IsPointerIn(x, y))
                 {
                     return i;
                 }
             }
-
             return -1;
         }
     }

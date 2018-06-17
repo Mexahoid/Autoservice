@@ -1,30 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using Autoservice.Classes.Car.Details;
+using Autoservice.Classes.CarClasses;
+using Autoservice.Classes.CarClasses.Details;
 using Autoservice.Classes.Service;
 
 namespace Autoservice.Classes
 {
     public class Client
     {
-        public Car.Car Car { get; }
+        public Car Car { get; }
         public string Name { get; }
 
         private readonly Thread clientThread;
         private readonly int treshold;
         private bool clientActive;
 
-        public Client(Car.Car car, string name)
+        public Client(Car car, string name)
         {
             Car = car;
             Name = name;
+            car.ClientName = name;
             clientThread = new Thread(Act);
             var r = new Random(DateTime.Now.Date.DayOfYear + 100);
             Thread.Sleep(20);
             treshold = r.Next(0, 70) / 10 + 1;
-            clientThread.Start();
             clientActive = true;
+        }
+
+        public void Start()
+        {
+            clientThread.Start();
+            Car.Start();
         }
 
         private void Act()
@@ -49,6 +56,8 @@ namespace Autoservice.Classes
 
                     bool canBeFixed = false;
                     service = Manager.GetInstance().GetRandomService();
+                    if (service == null)
+                        continue;
                     foreach (Detail detail in list)
                     {
                         if (service.CheckFlaw(detail.DetailType, detail.GetFlawSignificance()).Item1)

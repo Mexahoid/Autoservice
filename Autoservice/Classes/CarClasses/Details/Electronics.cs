@@ -1,7 +1,7 @@
 ﻿using System;
 using Autoservice.Enums;
 
-namespace Autoservice.Classes.Car.Details
+namespace Autoservice.Classes.CarClasses.Details
 {
     public class Electronics : Detail
     {

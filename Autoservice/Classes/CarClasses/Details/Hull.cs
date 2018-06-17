@@ -1,11 +1,11 @@
 ﻿using System;
 using Autoservice.Enums;
 
-namespace Autoservice.Classes.Car.Details
+namespace Autoservice.Classes.CarClasses.Details
 {
-    public class Interior : Detail
+    public class Hull : Detail
     {
-        public Interior() : base(DetailType.Interior)
+        public Hull() : base(DetailType.Hull)
         {
 
         }
@@ -13,7 +13,7 @@ namespace Autoservice.Classes.Car.Details
 
         public override Detail Clone()
         {
-            return new Interior
+            return new Hull
             {
                 Flaw = Flaw,
                 R = R,

@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autoservice.Classes.Car.Details;
+using Autoservice.Classes.CarClasses.Details;
 using Autoservice.Enums;
 using Autoservice.Interfaces;
 
@@ -19,6 +19,15 @@ namespace Autoservice.Classes.Drawing
             this.detail = detail;
         }
 
+        public void AddHandler(Action handler)
+        {
+            detail.SomethingChanged += handler;
+        }
+
+        public void RemoveHandler(Action handler)
+        {
+            detail.SomethingChanged -= handler;
+        }
 
         public void Draw(Graphics graphics)
         {
@@ -87,11 +96,11 @@ namespace Autoservice.Classes.Drawing
             Pen p = new Pen(Color.Black);
             Brush b = new SolidBrush(c);
 
-            graphics.FillRectangle(b, 330, y, 110, 45);
+            graphics.FillRectangle(b, 330, y, 150, 45);
             b = new SolidBrush(Color.Black);
-            graphics.DrawRectangle(p, 330, y, 110, 22);
+            graphics.DrawRectangle(p, 330, y, 150, 22);
             graphics.DrawString(detailText, new Font(FontFamily.GenericMonospace, 10), b, 330, y);
-            graphics.DrawRectangle(p, 330, y + 22, 110, 23);
+            graphics.DrawRectangle(p, 330, y + 22, 150, 23);
             graphics.DrawString(flawText, new Font(FontFamily.GenericMonospace, 10), b, 330, y + 22);
 
 

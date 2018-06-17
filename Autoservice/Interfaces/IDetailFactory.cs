@@ -1,4 +1,4 @@
-﻿using Autoservice.Classes.Car.Details;
+﻿using Autoservice.Classes.CarClasses.Details;
 using Autoservice.Enums;
 
 namespace Autoservice.Interfaces

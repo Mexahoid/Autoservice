@@ -3,7 +3,7 @@ using System.Text;
 using System.Threading;
 using Autoservice.Enums;
 
-namespace Autoservice.Classes.Car.Details
+namespace Autoservice.Classes.CarClasses.Details
 {
     /// <summary>
     /// Абстрактный класс для запчасти автомобиля, нельзя создать экземпляр.

@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Autoservice.Classes.Car.Details;
+using Autoservice.Classes.CarClasses;
+using Autoservice.Classes.CarClasses.Details;
+using Autoservice.Classes.Drawing;
 using Autoservice.Classes.Factories;
 using Autoservice.Classes.Service;
 using Autoservice.Enums;
@@ -25,6 +27,8 @@ namespace Autoservice.Classes
         /// Экземпляр синглтона Manager.
         /// </summary>
         private static Manager _instance;
+
+        public event Action<List<string>> NewClient;
 
         /// <summary>
         /// Список фабрик.
@@ -63,6 +67,17 @@ namespace Autoservice.Classes
         }
 
 
+        public void ShowClients()
+        {
+            using (var f = new ClientsForm())
+            {
+                var names = clients.Select(client => client.Name).ToList();
+                NewClient?.Invoke(names);
+                f.ShowDialog();
+            }
+        }
+
+
         /// <summary>
         /// Удаляет все сервисы и клиентов.
         /// </summary>
@@ -79,6 +94,21 @@ namespace Autoservice.Classes
                 client.Disable(this);
             }
             clients.Clear();
+        }
+
+        public void ShowClient(string name)
+        {
+            foreach (Client client in clients)
+            {
+                if (client.Name != name)
+                    continue;
+                CarFormDrawingManager.GetInstance().AddDrawable(client.Car, -1, -1);
+                using (var f = new CarForm())
+                {
+                    f.ShowDialog();
+                }
+                return;
+            }
         }
 
         /// <summary>
@@ -99,13 +129,26 @@ namespace Autoservice.Classes
             }
         }
 
+        public void Start()
+        {
+            foreach (Client client in clients)
+            {
+                client.Start();
+            }
+
+            foreach (MaintenanceService maintenanceService in services)
+            {
+                maintenanceService.Start();
+            }
+        }
+
 
         public void InvokeMaintenanceForm(int pos)
         {
             if (pos == -1 || pos >= services.Count)
                 return;
 
-            using (var f = new ServiceForm(services[pos]))
+            using (var f = new ServiceForm(new MaintenanceServiceWrapper(services[pos])))
             {
                 f.ShowDialog();
             }
@@ -138,7 +181,7 @@ namespace Autoservice.Classes
         /// Собирает машину.
         /// </summary>
         /// <returns>Возвращает экземпляр Car.</returns>
-        public Car.Car AssembleCar()
+        public Car AssembleCar()
         {
             lock (new object())
             {
@@ -152,7 +195,7 @@ namespace Autoservice.Classes
                     CreateDetail(DetailType.Brakes)
                 };
 
-                return new Car.Car(details);
+                return new Car(details);
             }
         }
 
@@ -182,7 +225,7 @@ namespace Autoservice.Classes
             {
                 Thread.Sleep(20);
                 int random = rand.Next(0, services.Count * 10) / 10;
-                return services[random];
+                return services.Count == 0 ? null : services[random];
             }
         }
 

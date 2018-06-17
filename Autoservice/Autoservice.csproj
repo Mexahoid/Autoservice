@@ -44,20 +44,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Car\Car.cs" />
+    <Compile Include="Classes\CarClasses\Car.cs" />
     <Compile Include="Classes\Drawing\CarDrawer.cs" />
-    <Compile Include="Classes\Car\Details\Brakes.cs" />
-    <Compile Include="Classes\Car\Details\Chassis.cs" />
-    <Compile Include="Classes\Car\Details\Electronics.cs" />
-    <Compile Include="Classes\Car\Details\Engine.cs" />
-    <Compile Include="Classes\Car\Details\Hull.cs" />
-    <Compile Include="Classes\Car\Details\Interior.cs" />
+    <Compile Include="Classes\CarClasses\Details\Brakes.cs" />
+    <Compile Include="Classes\CarClasses\Details\Chassis.cs" />
+    <Compile Include="Classes\CarClasses\Details\Electronics.cs" />
+    <Compile Include="Classes\CarClasses\Details\Engine.cs" />
+    <Compile Include="Classes\CarClasses\Details\Hull.cs" />
+    <Compile Include="Classes\CarClasses\Details\Interior.cs" />
     <Compile Include="Classes\Client.cs" />
     <Compile Include="Classes\Drawing\DetailDrawer.cs" />
     <Compile Include="Classes\Drawing\DrawingManager.cs" />
     <Compile Include="Classes\Drawing\MaintenanceServiceDrawer.cs" />
     <Compile Include="Classes\Drawing\MainFormDrawingManager.cs" />
     <Compile Include="Classes\Drawing\CarFormDrawingManager.cs" />
+    <Compile Include="Classes\Drawing\MaintenanceServiceWrapper.cs" />
     <Compile Include="Classes\Factories\BrakesFactory.cs" />
     <Compile Include="Classes\Factories\ChassisFactory.cs" />
     <Compile Include="Classes\Factories\ClientNameFactory.cs" />
@@ -76,6 +77,12 @@
     <Compile Include="Forms\CarForm.Designer.cs">
       <DependentUpon>CarForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ClientsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ClientsForm.Designer.cs">
+      <DependentUpon>ClientsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,8 +91,8 @@
     </Compile>
     <Compile Include="Classes\Program.cs" />
     <Compile Include="Enums\DetailType.cs" />
-    <Compile Include="Classes\Car\Details\Detail.cs" />
-    <Compile Include="Classes\Car\Flaw.cs" />
+    <Compile Include="Classes\CarClasses\Details\Detail.cs" />
+    <Compile Include="Classes\CarClasses\Flaw.cs" />
     <Compile Include="Forms\ServiceCreateForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +119,9 @@
     </Compile>
     <EmbeddedResource Include="Forms\CarForm.resx">
       <DependentUpon>CarForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ClientsForm.resx">
+      <DependentUpon>ClientsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

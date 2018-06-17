@@ -55,5 +55,15 @@ namespace Autoservice.Forms
         {
             manager.Stop();
         }
+
+        private void ctrlTSMIStart_Click(object sender, EventArgs e)
+        {
+            manager.Start();
+        }
+
+        private void ctrlTSMIClients_Click(object sender, EventArgs e)
+        {
+            manager.ShowClients();
+        }
     }
 }

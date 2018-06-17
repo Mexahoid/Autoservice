@@ -34,6 +34,8 @@
             this.ctrlTSMIHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.ctrlTSMIAddClient = new System.Windows.Forms.ToolStripMenuItem();
             this.ctrlPanel = new System.Windows.Forms.Panel();
+            this.ctrlTSMIStart = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctrlTSMIClients = new System.Windows.Forms.ToolStripMenuItem();
             this.ctrlTS.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,7 +54,9 @@
             this.ctrlTSMI_Menu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.ctrlTSMI_Menu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ctrlTSMIHelp,
-            this.ctrlTSMIAddClient});
+            this.ctrlTSMIAddClient,
+            this.ctrlTSMIClients,
+            this.ctrlTSMIStart});
             this.ctrlTSMI_Menu.Image = ((System.Drawing.Image)(resources.GetObject("ctrlTSMI_Menu.Image")));
             this.ctrlTSMI_Menu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ctrlTSMI_Menu.Name = "ctrlTSMI_Menu";
@@ -62,14 +66,14 @@
             // ctrlTSMIHelp
             // 
             this.ctrlTSMIHelp.Name = "ctrlTSMIHelp";
-            this.ctrlTSMIHelp.Size = new System.Drawing.Size(173, 22);
+            this.ctrlTSMIHelp.Size = new System.Drawing.Size(180, 22);
             this.ctrlTSMIHelp.Text = "Помощь";
             this.ctrlTSMIHelp.Click += new System.EventHandler(this.ctrlTSMIHelp_Click);
             // 
             // ctrlTSMIAddClient
             // 
             this.ctrlTSMIAddClient.Name = "ctrlTSMIAddClient";
-            this.ctrlTSMIAddClient.Size = new System.Drawing.Size(173, 22);
+            this.ctrlTSMIAddClient.Size = new System.Drawing.Size(180, 22);
             this.ctrlTSMIAddClient.Text = "Добавить клиента";
             this.ctrlTSMIAddClient.Click += new System.EventHandler(this.ctrlTSMIAddCLient_Click);
             // 
@@ -82,6 +86,20 @@
             this.ctrlPanel.Size = new System.Drawing.Size(800, 425);
             this.ctrlPanel.TabIndex = 1;
             this.ctrlPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ctrlPanel_MouseClick);
+            // 
+            // ctrlTSMIStart
+            // 
+            this.ctrlTSMIStart.Name = "ctrlTSMIStart";
+            this.ctrlTSMIStart.Size = new System.Drawing.Size(180, 22);
+            this.ctrlTSMIStart.Text = "Старт";
+            this.ctrlTSMIStart.Click += new System.EventHandler(this.ctrlTSMIStart_Click);
+            // 
+            // ctrlTSMIClients
+            // 
+            this.ctrlTSMIClients.Name = "ctrlTSMIClients";
+            this.ctrlTSMIClients.Size = new System.Drawing.Size(180, 22);
+            this.ctrlTSMIClients.Text = "Клиенты";
+            this.ctrlTSMIClients.Click += new System.EventHandler(this.ctrlTSMIClients_Click);
             // 
             // MainForm
             // 
@@ -107,6 +125,8 @@
         private System.Windows.Forms.ToolStripMenuItem ctrlTSMIHelp;
         private System.Windows.Forms.Panel ctrlPanel;
         private System.Windows.Forms.ToolStripMenuItem ctrlTSMIAddClient;
+        private System.Windows.Forms.ToolStripMenuItem ctrlTSMIStart;
+        private System.Windows.Forms.ToolStripMenuItem ctrlTSMIClients;
     }
 }
 

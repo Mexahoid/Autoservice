@@ -87,9 +87,9 @@
             this.ctrlSFLblIn.AutoSize = true;
             this.ctrlSFLblIn.Location = new System.Drawing.Point(9, 235);
             this.ctrlSFLblIn.Name = "ctrlSFLblIn";
-            this.ctrlSFLblIn.Size = new System.Drawing.Size(61, 13);
+            this.ctrlSFLblIn.Size = new System.Drawing.Size(107, 13);
             this.ctrlSFLblIn.TabIndex = 1;
-            this.ctrlSFLblIn.Text = "В очереди:";
+            this.ctrlSFLblIn.Text = "Клиенты в очереди:";
             // 
             // ctrlSFDGVWork
             // 
@@ -112,9 +112,9 @@
             this.ctrlSFLblWork.AutoSize = true;
             this.ctrlSFLblWork.Location = new System.Drawing.Point(212, 235);
             this.ctrlSFLblWork.Name = "ctrlSFLblWork";
-            this.ctrlSFLblWork.Size = new System.Drawing.Size(98, 13);
+            this.ctrlSFLblWork.Size = new System.Drawing.Size(143, 13);
             this.ctrlSFLblWork.TabIndex = 1;
-            this.ctrlSFLblWork.Text = "Обрабатываются:";
+            this.ctrlSFLblWork.Text = "Клиенты обрабатываются:";
             // 
             // ctrlSFDGVOut
             // 
@@ -137,9 +137,9 @@
             this.ctrlSFLblOut.AutoSize = true;
             this.ctrlSFLblOut.Location = new System.Drawing.Point(412, 235);
             this.ctrlSFLblOut.Name = "ctrlSFLblOut";
-            this.ctrlSFLblOut.Size = new System.Drawing.Size(61, 13);
+            this.ctrlSFLblOut.Size = new System.Drawing.Size(114, 13);
             this.ctrlSFLblOut.TabIndex = 1;
-            this.ctrlSFLblOut.Text = "Починены:";
+            this.ctrlSFLblOut.Text = "Клиенты обслужены:";
             // 
             // ServiceForm
             // 

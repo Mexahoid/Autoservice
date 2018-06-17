@@ -16,19 +16,19 @@ namespace Autoservice.Classes.Drawing
         /// <summary>
         /// Главный экземпляр графики.
         /// </summary>
-        protected PaintEventArgs tempCanv;
+        protected PaintEventArgs TempCanv;
 
         /// <summary>
         /// Канва, связанная с изображением.
         /// </summary>
-        protected Graphics canvasDrawing;
+        protected Graphics CanvasDrawing;
 
         /// <summary>
         /// Изображение, которым оперируют рисовальщики.
         /// </summary>
-        protected Bitmap bitmap;
+        protected Bitmap Bitmap;
 
-        protected IList<IDrawable> drawers;
+        protected IList<IDrawable> Drawers;
 
         /// <summary>
         /// Задает канву рисования.
@@ -36,19 +36,19 @@ namespace Autoservice.Classes.Drawing
         /// <param name="control">Элемент управления, на котором осуществляется рисование.</param>
         public void SetCanvas(Control control)
         {
-            bitmap = new Bitmap(control.Width, control.Height);
-            canvasDrawing = Graphics.FromImage(bitmap);
-            tempCanv = new PaintEventArgs(control.CreateGraphics(), control.ClientRectangle);
+            Bitmap = new Bitmap(control.Width, control.Height);
+            CanvasDrawing = Graphics.FromImage(Bitmap);
+            TempCanv = new PaintEventArgs(control.CreateGraphics(), control.ClientRectangle);
         }
 
         public void Draw()
         {
-            canvasDrawing.Clear(Color.White);
-            foreach (IDrawable drawable in drawers)
+            CanvasDrawing.Clear(Color.White);
+            foreach (IDrawable drawable in Drawers)
             {
-                drawable.Draw(canvasDrawing);
+                drawable.Draw(CanvasDrawing);
             }
-            tempCanv.Graphics.DrawImage(bitmap, 0, 0);
+            TempCanv.Graphics.DrawImage(Bitmap, 0, 0);
         }
 
         public abstract Bitmap GetImage();

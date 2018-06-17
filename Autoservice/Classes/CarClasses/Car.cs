@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
-using Autoservice.Classes.Car.Details;
+using Autoservice.Classes.CarClasses.Details;
 using Autoservice.Classes.Drawing;
 using Autoservice.Enums;
 using Autoservice.Interfaces;
 
-namespace Autoservice.Classes.Car
+namespace Autoservice.Classes.CarClasses
 {
     public class Car : IPositionable
     {
@@ -24,15 +24,21 @@ namespace Autoservice.Classes.Car
 
         private readonly Thread carThread;
 
+        public string ClientName { get; set; }
+
         private bool isEnabled;
 
         public Car(IList<Detail> details)
         {
             this.details = details;
             carThread = new Thread(CarWork);
-            carThread.Start();
             IsWorking = true;
             isEnabled = true;
+        }
+
+        public void Start()
+        {
+            carThread.Start();
         }
 
         /// <summary>
@@ -65,10 +71,10 @@ namespace Autoservice.Classes.Car
         /// Выдает список сломанных деталей.
         /// </summary>
         /// <returns>Возвращает экземпляр IList с Detail</returns>
-        public IList<Detail> GetBrokenDetails()
+        public IList<Detail> GetBrokenDetails(bool all = false)
         {
+            return all ? details : details.Where(detail => detail.HasFlaw()).ToList();
             // То же самое, что и foreach цикл с допсписком
-            return details.Where(detail => detail.HasFlaw()).ToList();
         }
 
         private void CarWork()

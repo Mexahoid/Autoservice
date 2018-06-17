@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autoservice.Classes.Car.Details;
+using Autoservice.Classes.CarClasses.Details;
 using Autoservice.Enums;
 using Autoservice.Interfaces;
 

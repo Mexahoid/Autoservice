@@ -13,6 +13,7 @@ namespace Autoservice.Classes.Drawing
     class DetailDrawer : IDrawable
     {
         private readonly Detail detail;
+        private static readonly object locker = new object();
 
         public DetailDrawer(Detail detail)
         {
@@ -96,13 +97,15 @@ namespace Autoservice.Classes.Drawing
             Pen p = new Pen(Color.Black);
             Brush b = new SolidBrush(c);
 
-            graphics.FillRectangle(b, 330, y, 150, 45);
-            b = new SolidBrush(Color.Black);
-            graphics.DrawRectangle(p, 330, y, 150, 22);
-            graphics.DrawString(detailText, new Font(FontFamily.GenericMonospace, 10), b, 330, y);
-            graphics.DrawRectangle(p, 330, y + 22, 150, 23);
-            graphics.DrawString(flawText, new Font(FontFamily.GenericMonospace, 10), b, 330, y + 22);
-
+            lock(locker)
+            {
+                graphics.FillRectangle(b, 330, y, 150, 45);
+                b = new SolidBrush(Color.Black);
+                graphics.DrawRectangle(p, 330, y, 150, 22);
+                graphics.DrawString(detailText, new Font(FontFamily.GenericMonospace, 10), b, 330, y);
+                graphics.DrawRectangle(p, 330, y + 22, 150, 23);
+                graphics.DrawString(flawText, new Font(FontFamily.GenericMonospace, 10), b, 330, y + 22);
+            }
 
         }
 

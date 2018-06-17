@@ -48,6 +48,7 @@ namespace Autoservice.Forms
         private void ctrlDGVClients_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             string name = ctrlDGVClients.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+            
             Manager.GetInstance().ShowClient(name);
             //Close();
         }

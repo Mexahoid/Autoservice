@@ -92,11 +92,12 @@ namespace Autoservice.Classes.CarClasses.Details
         /// </summary>
         public void FixFlaw()
         {
-            lock (locker)
+            //lock (locker)
             {
                 //Thread.Sleep((int) Flaw.FlawLevel / 40 * (int) DetailType);
                 Thread.Sleep(1000);
                 Flaw = null;
+                SomethingChanged?.Invoke();
             }
         }
 

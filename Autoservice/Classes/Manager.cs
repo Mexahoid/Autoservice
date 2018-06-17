@@ -93,7 +93,7 @@ namespace Autoservice.Classes
 
         private void InvokeClientsChange()
         {
-            lock (locker)
+           // lock (locker)
             {
                 var rows =
                     clients.Select(client =>
@@ -192,7 +192,7 @@ namespace Autoservice.Classes
         public static Manager GetInstance()
         {
             // Это защита от разрывания потоками.
-            lock (locker)
+            //lock (locker)
                 // То же самое, что и if (instance == null) 
                 // instance = new Manager(); return instance;
                 return _instance ?? (_instance = new Manager());
@@ -246,7 +246,7 @@ namespace Autoservice.Classes
         /// <returns>Возвращает экземпляр MaintenanceService.</returns>
         public MaintenanceService GetRandomService()
         {
-            lock (locker)
+            //lock (locker)
             {
                 Thread.Sleep(20);
                 int rnd = rand.Next(0, services.Count * 60);

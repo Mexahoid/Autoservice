@@ -67,8 +67,8 @@ namespace Autoservice.Classes
                     }
 
 
-                    var list = Car.GetBrokenDetails();
-                    Thread.Sleep(2000);
+                    //var list = Car.GetBrokenDetails();
+                    Thread.Sleep(1000);
 
                     //if (list.Count < treshold)
                     //    continue;
@@ -81,11 +81,10 @@ namespace Autoservice.Classes
                     if (!service.CanFixAtLeastSomething(Car))
                         continue;
                     ServiceCarIn = service.Name;
-
-                    SomethingChanged?.Invoke();
-                    service.AddCar(Car);
-                    
                     Car.IsWorking = false;
+                    service.AddCar(Car);
+                    SomethingChanged?.Invoke();
+                    
                 }
                 else
                 {

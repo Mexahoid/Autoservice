@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Autoservice.Classes.CarClasses.Details;
@@ -94,19 +95,22 @@ namespace Autoservice.Classes.Drawing
 
             string flawText = detail.HasFlaw() ? detail.GetFlawText() : "Все в порядке";
 
-            Pen p = new Pen(Color.Black);
-            Brush b = new SolidBrush(c);
+            DrawLocked(c, graphics, new []{ detailText , flawText}, y);
+        }
 
-            lock(locker)
+        private static void DrawLocked(Color c, Graphics g, string[] texts, int y)
+        {
+            lock (locker)
             {
-                graphics.FillRectangle(b, 330, y, 150, 45);
+                Pen p = new Pen(Color.Black);
+                Brush b = new SolidBrush(c);
+                g.FillRectangle(b, 330, y, 150, 45);
                 b = new SolidBrush(Color.Black);
-                graphics.DrawRectangle(p, 330, y, 150, 22);
-                graphics.DrawString(detailText, new Font(FontFamily.GenericMonospace, 10), b, 330, y);
-                graphics.DrawRectangle(p, 330, y + 22, 150, 23);
-                graphics.DrawString(flawText, new Font(FontFamily.GenericMonospace, 10), b, 330, y + 22);
+                g.DrawRectangle(p, 330, y, 150, 22);
+                g.DrawString(texts[0], new Font(FontFamily.GenericMonospace, 10), b, 330, y);
+                g.DrawRectangle(p, 330, y + 22, 150, 23);
+                g.DrawString(texts[1], new Font(FontFamily.GenericMonospace, 10), b, 330, y + 22);
             }
-
         }
 
         public bool IsInterfere(int x, int y)

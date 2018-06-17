@@ -16,7 +16,6 @@ namespace Autoservice.Classes.CarClasses.Details
             return new Interior
             {
                 Flaw = Flaw,
-                R = R,
                 DetailType = DetailType
             };
         }

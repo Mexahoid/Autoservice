@@ -72,8 +72,6 @@ namespace Autoservice.Classes.CarClasses
                 case DetailType.Interior:
                     Name = "Испорченный салон.";
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(detail), detail, null);
             }
         }
     }

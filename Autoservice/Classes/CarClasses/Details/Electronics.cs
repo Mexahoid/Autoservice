@@ -15,7 +15,6 @@ namespace Autoservice.Classes.CarClasses.Details
             return new Electronics
             {
                 Flaw = Flaw,
-                R = R,
                 DetailType = DetailType
             };
         }

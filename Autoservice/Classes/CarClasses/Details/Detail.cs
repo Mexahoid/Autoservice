@@ -34,6 +34,16 @@ namespace Autoservice.Classes.CarClasses.Details
             DetailType = type;
         }
 
+        protected static int GetRandom(int max)
+        {
+            lock (locker)
+            {
+            // Подождать 20 мс., чтобы рандом был настоящим.
+                Thread.Sleep(20);
+                return R.Next(0, max);
+            }
+        }
+
         /// <summary>
         /// Позволяет узнать, есть ли поломка у этой детали.
         /// </summary>
@@ -56,15 +66,16 @@ namespace Autoservice.Classes.CarClasses.Details
         {
             if (Flaw != null)
                 return false;
-            // Подождать 20 мс., чтобы рандом был настоящим.
-            Thread.Sleep(20);
-            if (R.Next(0, 1000) < Convert.ToInt32(DetailType))
+            if (GetRandom(1000) < Convert.ToInt32(DetailType))
             {
                 Flaw = new Flaw(DetailType);
             }
-            if (Flaw != null)
-                SomethingChanged?.Invoke();
+
+            if (Flaw == null)
+                return false;
+            SomethingChanged?.Invoke();
             return true;
+
         }
 
         /// <summary>
@@ -83,7 +94,8 @@ namespace Autoservice.Classes.CarClasses.Details
         {
             lock (locker)
             {
-                Thread.Sleep((int) Flaw.FlawLevel / 40 * (int) DetailType);
+                //Thread.Sleep((int) Flaw.FlawLevel / 40 * (int) DetailType);
+                Thread.Sleep(1000);
                 Flaw = null;
             }
         }

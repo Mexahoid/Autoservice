@@ -18,6 +18,8 @@ namespace Autoservice.Classes.Drawing
         /// </summary>
         protected PaintEventArgs TempCanv;
 
+        protected static readonly object locker = new object();
+
         /// <summary>
         /// Канва, связанная с изображением.
         /// </summary>
@@ -43,12 +45,16 @@ namespace Autoservice.Classes.Drawing
 
         public void Draw()
         {
-            CanvasDrawing.Clear(Color.White);
-            foreach (IDrawable drawable in Drawers)
+            lock (locker)
             {
-                drawable.Draw(CanvasDrawing);
+                CanvasDrawing.Clear(Color.White);
+                foreach (IDrawable drawable in Drawers)
+                {
+                    drawable.Draw(CanvasDrawing);
+                }
+                TempCanv.Graphics.DrawImage(Bitmap, 0, 0);
             }
-            TempCanv.Graphics.DrawImage(Bitmap, 0, 0);
+
         }
 
         public abstract Bitmap GetImage();

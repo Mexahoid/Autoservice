@@ -14,7 +14,6 @@ namespace Autoservice.Classes.CarClasses.Details
             return new Brakes
             {
                 Flaw = Flaw,
-                R = R,
                 DetailType = DetailType
             };
         }

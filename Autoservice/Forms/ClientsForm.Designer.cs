@@ -42,7 +42,9 @@
             this.ctrlDGVClients.ColumnHeadersVisible = false;
             this.ctrlDGVClients.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ctrlDGVClients.Location = new System.Drawing.Point(0, 0);
+            this.ctrlDGVClients.MultiSelect = false;
             this.ctrlDGVClients.Name = "ctrlDGVClients";
+            this.ctrlDGVClients.ReadOnly = true;
             this.ctrlDGVClients.RowHeadersVisible = false;
             this.ctrlDGVClients.Size = new System.Drawing.Size(387, 231);
             this.ctrlDGVClients.TabIndex = 0;

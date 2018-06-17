@@ -15,9 +15,10 @@ namespace Autoservice.Forms
     {
         private readonly CarFormDrawingManager carFormDrawingManager;
 
-        public CarForm()
+        public CarForm(string name)
         {
             InitializeComponent();
+            this.Text = name;
             carFormDrawingManager = CarFormDrawingManager.GetInstance();
             carFormDrawingManager.EventReDraw += OnPaint;
             carFormDrawingManager.SetCanvas(ctrlCFPanel);

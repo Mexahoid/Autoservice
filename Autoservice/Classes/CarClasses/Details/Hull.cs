@@ -16,7 +16,6 @@ namespace Autoservice.Classes.CarClasses.Details
             return new Hull
             {
                 Flaw = Flaw,
-                R = R,
                 DetailType = DetailType
             };
         }

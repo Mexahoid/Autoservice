@@ -28,7 +28,6 @@ namespace Autoservice.Classes
         /// </summary>
         private static Manager _instance;
 
-        private bool threading;
         private static readonly object locker = new object();
 
         public event Action<List<string>> NewClient;
@@ -69,27 +68,32 @@ namespace Autoservice.Classes
             };
         }
 
-        public void AddHandler(Action<List<String>> handler)
+        public void AddHandler(Action<List<string>> handler)
         {
             NewClient += handler;
         }
-        public void RemoveHandler(Action<List<String>> handler)
+        public void RemoveHandler(Action<List<string>> handler)
         {
-            NewClient -= handler;
+            if (NewClient != null)
+                NewClient -= handler;
         }
-        
+
         public void ShowClients()
         {
             using (var f = new ClientsForm())
             {
                 InvokeClientsChange();
-                f.ShowDialog();
+                lock (locker)
+                {
+
+                    f.ShowDialog();
+                }
             }
         }
 
         private void InvokeClientsChange()
         {
-            lock(locker)
+            lock (locker)
             {
                 var rows =
                     clients.Select(client =>
@@ -127,9 +131,12 @@ namespace Autoservice.Classes
                 if (client.Name != realName)
                     continue;
                 CarFormDrawingManager.GetInstance().AddDrawable(client.Car, -1, -1);
-                using (var f = new CarForm())
+                lock (locker)
                 {
-                    f.ShowDialog();
+                    using (var f = new CarForm(realName))
+                    {
+                        f.ShowDialog();
+                    }
                 }
                 return;
             }
@@ -231,7 +238,7 @@ namespace Autoservice.Classes
             clients.Add(new Client(AssembleCar(), cnFactory.GetRandomName(), InvokeClientsChange));
             return clients.Count;
         }
-        
+
 
         /// <summary>
         /// Возвращает случайный сервис.

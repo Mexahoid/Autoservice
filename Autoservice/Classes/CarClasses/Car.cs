@@ -16,6 +16,8 @@ namespace Autoservice.Classes.CarClasses
         /// Список деталей автомобиля.
         /// </summary>
         private readonly IList<Detail> details;
+        protected static Random R = new Random(DateTime.UtcNow.Millisecond + 700);
+        private static readonly object locker = new object();
 
         private bool? paused;
 
@@ -27,7 +29,7 @@ namespace Autoservice.Classes.CarClasses
         public bool IsWorking { get; set; }
 
         private readonly Thread carThread;
-        
+
 
         private bool isEnabled;
 
@@ -37,6 +39,15 @@ namespace Autoservice.Classes.CarClasses
             carThread = new Thread(CarWork);
             IsWorking = true;
             isEnabled = true;
+        }
+        protected static int GetRandom(int max)
+        {
+            lock (locker)
+            {
+                // Подождать 20 мс., чтобы рандом был настоящим.
+                Thread.Sleep(20);
+                return R.Next(0, max);
+            }
         }
 
         public void ThreadWork()
@@ -99,15 +110,17 @@ namespace Autoservice.Classes.CarClasses
             while (isEnabled)
             {
                 Thread.Sleep(500);
+                if (!IsWorking)
+                    continue;
                 if (counter-- > 0)
                     continue;
-                foreach (Detail detail in details)
-                {
-                    if (!detail.TrySetRandomFlaw())
-                        continue;
-                    counter = 15;
-                    break;
-                }
+
+                int det = GetRandom(600) / 100;
+
+                if (!details[det].TrySetRandomFlaw())
+                    continue;
+                counter = 15;
+
             }
 
             carThread.Abort();

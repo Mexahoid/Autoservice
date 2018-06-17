@@ -32,17 +32,18 @@
             this.ctrlTS = new System.Windows.Forms.ToolStrip();
             this.ctrlTSMI_Menu = new System.Windows.Forms.ToolStripDropDownButton();
             this.ctrlTSMIHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctrlTSMIAddClient = new System.Windows.Forms.ToolStripMenuItem();
             this.ctrlPanel = new System.Windows.Forms.Panel();
             this.ctrlTSMIStart = new System.Windows.Forms.ToolStripMenuItem();
-            this.ctrlTSMIClients = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctrlTSMIClientBox = new System.Windows.Forms.ToolStripTextBox();
+            this.ctrlTSMIAddClient = new System.Windows.Forms.ToolStripMenuItem();
             this.ctrlTS.SuspendLayout();
             this.SuspendLayout();
             // 
             // ctrlTS
             // 
             this.ctrlTS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ctrlTSMI_Menu});
+            this.ctrlTSMI_Menu,
+            this.ctrlTSMIClientBox});
             this.ctrlTS.Location = new System.Drawing.Point(0, 0);
             this.ctrlTS.Name = "ctrlTS";
             this.ctrlTS.Size = new System.Drawing.Size(800, 25);
@@ -55,7 +56,6 @@
             this.ctrlTSMI_Menu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ctrlTSMIHelp,
             this.ctrlTSMIAddClient,
-            this.ctrlTSMIClients,
             this.ctrlTSMIStart});
             this.ctrlTSMI_Menu.Image = ((System.Drawing.Image)(resources.GetObject("ctrlTSMI_Menu.Image")));
             this.ctrlTSMI_Menu.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -69,13 +69,6 @@
             this.ctrlTSMIHelp.Size = new System.Drawing.Size(180, 22);
             this.ctrlTSMIHelp.Text = "Помощь";
             this.ctrlTSMIHelp.Click += new System.EventHandler(this.ctrlTSMIHelp_Click);
-            // 
-            // ctrlTSMIAddClient
-            // 
-            this.ctrlTSMIAddClient.Name = "ctrlTSMIAddClient";
-            this.ctrlTSMIAddClient.Size = new System.Drawing.Size(180, 22);
-            this.ctrlTSMIAddClient.Text = "Добавить клиента";
-            this.ctrlTSMIAddClient.Click += new System.EventHandler(this.ctrlTSMIAddCLient_Click);
             // 
             // ctrlPanel
             // 
@@ -94,12 +87,19 @@
             this.ctrlTSMIStart.Text = "Старт";
             this.ctrlTSMIStart.Click += new System.EventHandler(this.ctrlTSMIStart_Click);
             // 
-            // ctrlTSMIClients
+            // ctrlTSMIClientBox
             // 
-            this.ctrlTSMIClients.Name = "ctrlTSMIClients";
-            this.ctrlTSMIClients.Size = new System.Drawing.Size(180, 22);
-            this.ctrlTSMIClients.Text = "Клиенты";
-            this.ctrlTSMIClients.Click += new System.EventHandler(this.ctrlTSMIClients_Click);
+            this.ctrlTSMIClientBox.Name = "ctrlTSMIClientBox";
+            this.ctrlTSMIClientBox.ReadOnly = true;
+            this.ctrlTSMIClientBox.Size = new System.Drawing.Size(100, 25);
+            this.ctrlTSMIClientBox.Click += new System.EventHandler(this.ctrlTSMIClientBox_Click);
+            // 
+            // ctrlTSMIAddClient
+            // 
+            this.ctrlTSMIAddClient.Name = "ctrlTSMIAddClient";
+            this.ctrlTSMIAddClient.Size = new System.Drawing.Size(180, 22);
+            this.ctrlTSMIAddClient.Text = "Добавить клиента";
+            this.ctrlTSMIAddClient.Click += new System.EventHandler(this.ctrlTSMIAddCLient_Click);
             // 
             // MainForm
             // 
@@ -124,9 +124,9 @@
         private System.Windows.Forms.ToolStripDropDownButton ctrlTSMI_Menu;
         private System.Windows.Forms.ToolStripMenuItem ctrlTSMIHelp;
         private System.Windows.Forms.Panel ctrlPanel;
-        private System.Windows.Forms.ToolStripMenuItem ctrlTSMIAddClient;
         private System.Windows.Forms.ToolStripMenuItem ctrlTSMIStart;
-        private System.Windows.Forms.ToolStripMenuItem ctrlTSMIClients;
+        private System.Windows.Forms.ToolStripTextBox ctrlTSMIClientBox;
+        private System.Windows.Forms.ToolStripMenuItem ctrlTSMIAddClient;
     }
 }
 

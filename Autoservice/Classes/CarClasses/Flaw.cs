@@ -36,19 +36,19 @@ namespace Autoservice.Classes.CarClasses
             switch (FlawLevel)
             {
                 case Significance.Minor:
-                    Comment = "Почти в порядке.";
+                    Comment = "Почти в порядке";
                     break;
                 case Significance.Average:
-                    Comment = "Средне.";
+                    Comment = "Средне";
                     break;
                 case Significance.Serious:
-                    Comment = "Серьезно.";
+                    Comment = "Серьезно";
                     break;
                 case Significance.Critical:
-                    Comment = "Очень серьезно.";
+                    Comment = "Очень серьезно";
                     break;
                 case Significance.Fatal:
-                    Comment = "Фатально.";
+                    Comment = "Фатально";
                     break;
             }
 

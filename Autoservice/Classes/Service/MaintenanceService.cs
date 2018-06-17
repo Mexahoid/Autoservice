@@ -22,6 +22,7 @@ namespace Autoservice.Classes.Service
         /// </summary>
         public string Name { get; }
 
+        private static readonly object locker = new object();
         /// <summary>
         /// Перечень услуг и цен.
         /// </summary>
@@ -34,9 +35,7 @@ namespace Autoservice.Classes.Service
 
         private readonly Thread[] threadWorkers;
 
-        private readonly ConcurrentQueue<Car> inputCarQueue;
-
-        private readonly IList<Car> workingCarList;
+        private readonly Queue<Car> inputCarQueue;
 
         private readonly IList<Car> outputCarList;
 
@@ -49,15 +48,14 @@ namespace Autoservice.Classes.Service
         {
             Name = name;
             serviceWorking = true;
-            
-            workingCarList = new List<Car>();
+
             maintenances = new List<Tuple<Maintenance, int>>();
             threadWorkers = new Thread[workers];
             for (int i = 0; i < workers; i++)
             {
                 threadWorkers[i] = new Thread(ServeCar);
             }
-            inputCarQueue = new ConcurrentQueue<Car>();
+            inputCarQueue = new Queue<Car>();
             outputCarList = new List<Car>();
         }
 
@@ -76,7 +74,7 @@ namespace Autoservice.Classes.Service
         public IList<string> GetMaintenances()
         {
             List<string> names = new List<string>();
-            lock (new object())
+            lock (locker)
             {
                 names.AddRange(maintenances.Select(maintenance =>
                     $"{maintenance.Item1.Name} - {maintenance.Item2} у.е."));
@@ -85,107 +83,26 @@ namespace Autoservice.Classes.Service
             return names;
         }
 
-        public IList<string> GetWorkingCars()
-        {
-            List<string> names = new List<string>();
-            lock (new object())
-            {
-                names.AddRange(from car in workingCarList where car != null select car.ClientName);
-            }
-
-            return names;
-        }
-
         private Car GetCarFromQueue()
         {
-            lock (new object())
+            lock (locker)
             {
                 if (inputCarQueue.Count <= 0)
                     return null;
-
-                if (!inputCarQueue.TryDequeue(out Car outer))
-                    return null;
-                inputCarQueueString.TryDequeue(out string name);
-
-                Action<ConcurrentQueue<Car>> act = (q => inputCarQueue.TryDequeue(out Car s));
-                
-
-                workingCarList.Add(outer);
+                var car = inputCarQueue.Dequeue();
                 SomethingUpdated?.Invoke();
-                return outer;
+                return car;
             }
         }
-        
-
-        private void AccessInputQueue(Action<ConcurrentQueue<Car>> action)
-        {
-            lock (new object())
-            {
-                action(inputCarQueue);
-            }
-        }
-
-        private void AccessWorkingCarList(Action<IList<Car>> action)
-        {
-            lock (new object())
-            {
-                action(workingCarList);
-            }
-        }
-
-        private void AccessOutputCarList(Action<IList<Car>> action)
-        {
-            lock (new object())
-            {
-                action(outputCarList);
-            }
-        }
-
-
-
-
-
-
 
 
         private void AddCarToOutput(Car car)
         {
-            lock (new object())
+            lock (locker)
             {
-                if (workingCarList.Contains(car))
-                    workingCarList.Remove(car);
                 outputCarList.Add(car);
                 SomethingUpdated?.Invoke();
             }
-        }
-
-        public IList<string> GetInQueueCars()
-        {
-            IList<string> cars = new List<string>();
-            for (int i = 0; i < inputCarQueueString.Count; i++)
-            {
-                string carHolder;
-                do
-                    inputCarQueueString.TryDequeue(out carHolder);
-                while (carHolder == null);
-
-                cars.Add(carHolder);
-
-                inputCarQueueString.Enqueue(carHolder);
-            }
-            return cars;
-        }
-
-        public IList<string> GetOutQueueCars()
-        {
-            var cars = new List<string>();
-
-            lock (new object())
-            {
-                cars.AddRange(outputCarList.Select(car => car.ClientName));
-            }
-
-            return cars;
         }
 
 
@@ -204,11 +121,13 @@ namespace Autoservice.Classes.Service
         /// <param name="detail">Тип детали.</param>
         /// <param name="significance">Степень поломки.</param>
         /// <returns>Возвращает кортеж из логического значения и строки.</returns>
-        public Tuple<bool, string> CheckFlaw(DetailType detail, Significance significance)
+        public Tuple<bool, string> CheckFlaw(DetailType detail, Significance? significance)
         {
-            lock (new object())
+            lock (locker)
             {
-                var el = maintenances.FirstOrDefault(m => m.Item1.CheckFlaw(detail, significance));
+                if (significance == null)
+                    return Tuple.Create(false, "Все в порядке.");
+                var el = maintenances.FirstOrDefault(m => m.Item1.CheckFlaw(detail, (Significance)significance));
 
                 if (el == null)
                     return Tuple.Create(false, "Такие поломки здесь не чинятся.");
@@ -238,7 +157,7 @@ namespace Autoservice.Classes.Service
                 foreach (Detail detail in flaws)
                 {
                     Tuple<Maintenance, int> work;
-                    lock (new object())
+                    lock (locker)
                     {
                         work = maintenances.FirstOrDefault(w =>
                             w.Item1.CheckFlaw(detail.DetailType, detail.GetFlawSignificance()));
@@ -256,23 +175,16 @@ namespace Autoservice.Classes.Service
             Thread.CurrentThread.Abort();
         }
 
-        private void RemoveFromList(Car car)
-        {
-            lock (new object())
-            {
-                workingCarList.Remove(car);
-            }
-        }
 
         public bool FindCar(Client client)
         {
-            lock (new object())
+            lock (locker)
             {
                 for (int i = 0; i < outputCarList.Count; i++)
                 {
                     if (outputCarList[i] != client.Car)
                         continue;
-                    outputCarList.RemoveAt(i);
+                    outputCarList.Remove(client.Car);
                     SomethingUpdated?.Invoke();
                     return true;
                 }
@@ -286,10 +198,9 @@ namespace Autoservice.Classes.Service
         /// <param name="car">Машина для починки.</param>
         public void AddCar(Car car)
         {
-            lock (new object())
+            lock (locker)
             {
                 inputCarQueue.Enqueue(car);
-                inputCarQueueString.Enqueue(car.ClientName);
             }
         }
 
@@ -300,6 +211,20 @@ namespace Autoservice.Classes.Service
         public void Disable(Manager m)
         {
             serviceWorking = false;
+        }
+
+        public bool CanFixAtLeastSomething(Car c)
+        {
+            lock (locker)
+                return c.GetBrokenDetails()
+                    .Any(detail => maintenances
+                        .Any(maintenance => maintenance.Item1.
+                            CheckFlaw(detail.DetailType, detail.GetFlawSignificance())));
+        }
+
+        public int GetWorkersCount()
+        {
+            return threadWorkers.Length;
         }
 
         public Bitmap GetImage()

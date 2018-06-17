@@ -12,6 +12,8 @@ namespace Autoservice.Classes
         public Car Car { get; }
         public string Name { get; }
 
+        public string ServiceCarIn { get; set; }
+
         private readonly Thread clientThread;
         private readonly int treshold;
         private bool clientActive;
@@ -20,7 +22,6 @@ namespace Autoservice.Classes
         {
             Car = car;
             Name = name;
-            car.ClientName = name;
             clientThread = new Thread(Act);
             var r = new Random(DateTime.Now.Date.DayOfYear + 100);
             Thread.Sleep(20);
@@ -53,20 +54,16 @@ namespace Autoservice.Classes
 
                     //if (list.Count < treshold)
                     //    continue;
-
-                    bool canBeFixed = false;
+                    
                     service = Manager.GetInstance().GetRandomService();
                     if (service == null)
                         continue;
-                    foreach (Detail detail in list)
-                    {
-                        if (service.CheckFlaw(detail.DetailType, detail.GetFlawSignificance()).Item1)
-                            canBeFixed = true;
-                    }
 
-                    if (!canBeFixed)
+                    if (!service.CanFixAtLeastSomething(Car))
                         continue;
+                    ServiceCarIn = service.Name;
                     service.AddCar(Car);
+                    
                     Car.IsWorking = false;
                 }
                 else
@@ -74,10 +71,10 @@ namespace Autoservice.Classes
                     Thread.Sleep(1000);
                     if (service == null)
                         continue;
-                    if (service.FindCar(this))
-                    {
-                        Car.IsWorking = true;
-                    }
+                    if (!service.FindCar(this))
+                        continue;
+                    Car.IsWorking = true;
+                    ServiceCarIn = null;
                 }
 
             }

@@ -16,15 +16,16 @@ namespace Autoservice.Classes.CarClasses
         /// Список деталей автомобиля.
         /// </summary>
         private readonly IList<Detail> details;
-        
+
+        private int counter;
+
         /// <summary>
         /// Работает ли машина.
         /// </summary>
         public bool IsWorking { get; set; }
 
         private readonly Thread carThread;
-
-        public string ClientName { get; set; }
+        
 
         private bool isEnabled;
 
@@ -81,10 +82,15 @@ namespace Autoservice.Classes.CarClasses
         {
             while (isEnabled)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
+                if (counter-- > 0)
+                    continue;
                 foreach (Detail detail in details)
                 {
-                    detail.TrySetRandomFlaw();
+                    if (!detail.TrySetRandomFlaw())
+                        continue;
+                    counter = 15;
+                    break;
                 }
             }
 

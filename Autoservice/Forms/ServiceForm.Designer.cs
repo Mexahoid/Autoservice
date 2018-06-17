@@ -30,16 +30,8 @@
         {
             this.ctrlSFDGV_offers = new System.Windows.Forms.DataGridView();
             this.ctrlSFLblOffers = new System.Windows.Forms.Label();
-            this.ctrlSFDGVIn = new System.Windows.Forms.DataGridView();
-            this.ctrlSFLblIn = new System.Windows.Forms.Label();
-            this.ctrlSFDGVWork = new System.Windows.Forms.DataGridView();
-            this.ctrlSFLblWork = new System.Windows.Forms.Label();
-            this.ctrlSFDGVOut = new System.Windows.Forms.DataGridView();
-            this.ctrlSFLblOut = new System.Windows.Forms.Label();
+            this.ctrlBtnClients = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ctrlSFDGV_offers)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ctrlSFDGVIn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ctrlSFDGVWork)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ctrlSFDGVOut)).BeginInit();
             this.SuspendLayout();
             // 
             // ctrlSFDGV_offers
@@ -54,7 +46,7 @@
             this.ctrlSFDGV_offers.Name = "ctrlSFDGV_offers";
             this.ctrlSFDGV_offers.ReadOnly = true;
             this.ctrlSFDGV_offers.RowHeadersVisible = false;
-            this.ctrlSFDGV_offers.Size = new System.Drawing.Size(583, 150);
+            this.ctrlSFDGV_offers.Size = new System.Drawing.Size(345, 150);
             this.ctrlSFDGV_offers.TabIndex = 0;
             // 
             // ctrlSFLblOffers
@@ -66,93 +58,23 @@
             this.ctrlSFLblOffers.TabIndex = 1;
             this.ctrlSFLblOffers.Text = "Услуги:";
             // 
-            // ctrlSFDGVIn
+            // ctrlBtnClients
             // 
-            this.ctrlSFDGVIn.AllowUserToAddRows = false;
-            this.ctrlSFDGVIn.AllowUserToDeleteRows = false;
-            this.ctrlSFDGVIn.AllowUserToResizeRows = false;
-            this.ctrlSFDGVIn.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ctrlSFDGVIn.ColumnHeadersVisible = false;
-            this.ctrlSFDGVIn.Location = new System.Drawing.Point(12, 251);
-            this.ctrlSFDGVIn.MultiSelect = false;
-            this.ctrlSFDGVIn.Name = "ctrlSFDGVIn";
-            this.ctrlSFDGVIn.ReadOnly = true;
-            this.ctrlSFDGVIn.RowHeadersVisible = false;
-            this.ctrlSFDGVIn.Size = new System.Drawing.Size(180, 150);
-            this.ctrlSFDGVIn.TabIndex = 0;
-            this.ctrlSFDGVIn.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ctrlSFDGV_CellClick);
-            // 
-            // ctrlSFLblIn
-            // 
-            this.ctrlSFLblIn.AutoSize = true;
-            this.ctrlSFLblIn.Location = new System.Drawing.Point(9, 235);
-            this.ctrlSFLblIn.Name = "ctrlSFLblIn";
-            this.ctrlSFLblIn.Size = new System.Drawing.Size(107, 13);
-            this.ctrlSFLblIn.TabIndex = 1;
-            this.ctrlSFLblIn.Text = "Клиенты в очереди:";
-            // 
-            // ctrlSFDGVWork
-            // 
-            this.ctrlSFDGVWork.AllowUserToAddRows = false;
-            this.ctrlSFDGVWork.AllowUserToDeleteRows = false;
-            this.ctrlSFDGVWork.AllowUserToResizeRows = false;
-            this.ctrlSFDGVWork.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ctrlSFDGVWork.ColumnHeadersVisible = false;
-            this.ctrlSFDGVWork.Location = new System.Drawing.Point(215, 251);
-            this.ctrlSFDGVWork.MultiSelect = false;
-            this.ctrlSFDGVWork.Name = "ctrlSFDGVWork";
-            this.ctrlSFDGVWork.ReadOnly = true;
-            this.ctrlSFDGVWork.RowHeadersVisible = false;
-            this.ctrlSFDGVWork.Size = new System.Drawing.Size(180, 150);
-            this.ctrlSFDGVWork.TabIndex = 0;
-            this.ctrlSFDGVWork.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ctrlSFDGV_CellClick);
-            // 
-            // ctrlSFLblWork
-            // 
-            this.ctrlSFLblWork.AutoSize = true;
-            this.ctrlSFLblWork.Location = new System.Drawing.Point(212, 235);
-            this.ctrlSFLblWork.Name = "ctrlSFLblWork";
-            this.ctrlSFLblWork.Size = new System.Drawing.Size(143, 13);
-            this.ctrlSFLblWork.TabIndex = 1;
-            this.ctrlSFLblWork.Text = "Клиенты обрабатываются:";
-            // 
-            // ctrlSFDGVOut
-            // 
-            this.ctrlSFDGVOut.AllowUserToAddRows = false;
-            this.ctrlSFDGVOut.AllowUserToDeleteRows = false;
-            this.ctrlSFDGVOut.AllowUserToResizeRows = false;
-            this.ctrlSFDGVOut.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.ctrlSFDGVOut.ColumnHeadersVisible = false;
-            this.ctrlSFDGVOut.Location = new System.Drawing.Point(415, 251);
-            this.ctrlSFDGVOut.MultiSelect = false;
-            this.ctrlSFDGVOut.Name = "ctrlSFDGVOut";
-            this.ctrlSFDGVOut.ReadOnly = true;
-            this.ctrlSFDGVOut.RowHeadersVisible = false;
-            this.ctrlSFDGVOut.Size = new System.Drawing.Size(180, 150);
-            this.ctrlSFDGVOut.TabIndex = 0;
-            this.ctrlSFDGVOut.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ctrlSFDGV_CellClick);
-            // 
-            // ctrlSFLblOut
-            // 
-            this.ctrlSFLblOut.AutoSize = true;
-            this.ctrlSFLblOut.Location = new System.Drawing.Point(412, 235);
-            this.ctrlSFLblOut.Name = "ctrlSFLblOut";
-            this.ctrlSFLblOut.Size = new System.Drawing.Size(114, 13);
-            this.ctrlSFLblOut.TabIndex = 1;
-            this.ctrlSFLblOut.Text = "Клиенты обслужены:";
+            this.ctrlBtnClients.Location = new System.Drawing.Point(12, 193);
+            this.ctrlBtnClients.Name = "ctrlBtnClients";
+            this.ctrlBtnClients.Size = new System.Drawing.Size(167, 23);
+            this.ctrlBtnClients.TabIndex = 2;
+            this.ctrlBtnClients.Text = "Показать всех клиентов";
+            this.ctrlBtnClients.UseVisualStyleBackColor = true;
+            this.ctrlBtnClients.Click += new System.EventHandler(this.ctrlBtnClients_Click);
             // 
             // ServiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(608, 413);
-            this.Controls.Add(this.ctrlSFLblOut);
-            this.Controls.Add(this.ctrlSFLblWork);
-            this.Controls.Add(this.ctrlSFLblIn);
+            this.ClientSize = new System.Drawing.Size(381, 228);
+            this.Controls.Add(this.ctrlBtnClients);
             this.Controls.Add(this.ctrlSFLblOffers);
-            this.Controls.Add(this.ctrlSFDGVOut);
-            this.Controls.Add(this.ctrlSFDGVWork);
-            this.Controls.Add(this.ctrlSFDGVIn);
             this.Controls.Add(this.ctrlSFDGV_offers);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -160,9 +82,6 @@
             this.Name = "ServiceForm";
             this.Text = "Сервис";
             ((System.ComponentModel.ISupportInitialize)(this.ctrlSFDGV_offers)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ctrlSFDGVIn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ctrlSFDGVWork)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ctrlSFDGVOut)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -172,11 +91,6 @@
 
         private System.Windows.Forms.DataGridView ctrlSFDGV_offers;
         private System.Windows.Forms.Label ctrlSFLblOffers;
-        private System.Windows.Forms.DataGridView ctrlSFDGVIn;
-        private System.Windows.Forms.Label ctrlSFLblIn;
-        private System.Windows.Forms.DataGridView ctrlSFDGVWork;
-        private System.Windows.Forms.Label ctrlSFLblWork;
-        private System.Windows.Forms.DataGridView ctrlSFDGVOut;
-        private System.Windows.Forms.Label ctrlSFLblOut;
+        private System.Windows.Forms.Button ctrlBtnClients;
     }
 }

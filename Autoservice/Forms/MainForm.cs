@@ -17,6 +17,7 @@ namespace Autoservice.Forms
             manager = Manager.GetInstance();
             drawManager.SetCanvas(ctrlPanel);
             drawManager.EventReDraw += OnPaint;
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
         }
 
         private void ctrlTSMIHelp_Click(object sender, EventArgs e)
@@ -30,11 +31,12 @@ namespace Autoservice.Forms
         /// Переопределяет метода перерисовки для инвалидации.
         /// </summary>
         /// <param name="e">Объект отрисовки.</param>
-        protected override void OnPaint(PaintEventArgs e) => MainFormDrawingManager.GetInstance().Draw();
+        protected override void OnPaint(PaintEventArgs e) => drawManager.Draw();
 
         private void ctrlTSMIAddCLient_Click(object sender, EventArgs e)
         {
-            manager.MakeClient();
+            if (ctrlTSMIClientBox.TextBox != null)
+                ctrlTSMIClientBox.TextBox.Text = $"Клиентов: {manager.MakeClient()}";
         }
 
         private void ctrlPanel_MouseClick(object sender, MouseEventArgs e)
@@ -61,7 +63,7 @@ namespace Autoservice.Forms
             manager.Start();
         }
 
-        private void ctrlTSMIClients_Click(object sender, EventArgs e)
+        private void ctrlTSMIClientBox_Click(object sender, EventArgs e)
         {
             manager.ShowClients();
         }

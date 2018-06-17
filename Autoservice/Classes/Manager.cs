@@ -71,8 +71,10 @@ namespace Autoservice.Classes
         {
             using (var f = new ClientsForm())
             {
-                var names = clients.Select(client => client.Name).ToList();
-                NewClient?.Invoke(names);
+                var rows = 
+                    clients.Select(client => 
+                        $"Клиент: {client.Name}{(client.ServiceCarIn == null ? "" : $" - Находится в сервисе {client.ServiceCarIn}")}").ToList();
+                NewClient?.Invoke(rows);
                 f.ShowDialog();
             }
         }
@@ -98,9 +100,11 @@ namespace Autoservice.Classes
 
         public void ShowClient(string name)
         {
+            string[] words = name.Split(' ');
+            string realName = words[1] + ' ' + words[2];
             foreach (Client client in clients)
             {
-                if (client.Name != name)
+                if (client.Name != realName)
                     continue;
                 CarFormDrawingManager.GetInstance().AddDrawable(client.Car, -1, -1);
                 using (var f = new CarForm())
@@ -202,18 +206,12 @@ namespace Autoservice.Classes
         /// <summary>
         /// Создает клиента.
         /// </summary>
-        public void MakeClient()
+        public int MakeClient()
         {
             clients.Add(new Client(AssembleCar(), cnFactory.GetRandomName()));
+            return clients.Count;
         }
-
-
-        public int[] GetDims(MaintenanceService ms)
-        {
-            int[] ret = new int[4];
-
-            return ret;
-        }
+        
 
         /// <summary>
         /// Возвращает случайный сервис.

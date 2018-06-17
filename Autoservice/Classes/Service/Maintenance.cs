@@ -43,7 +43,7 @@ namespace Autoservice.Classes.Service
         /// <param name="detail">Тип детали.</param>
         /// <param name="significance">Степень поломки.</param>
         /// <returns>Возвращает логическое выражение.</returns>
-        public bool CheckFlaw(DetailType detail, Significance significance)
+        public bool CheckFlaw(DetailType detail, Significance? significance)
         {
             // Если детали равны и возможности выше поломки
             return fixableDetail.CompareTo(detail) == 0 &&

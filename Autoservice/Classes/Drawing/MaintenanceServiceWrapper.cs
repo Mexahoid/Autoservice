@@ -26,22 +26,7 @@ namespace Autoservice.Classes.Drawing
         {
             return service.GetMaintenances();
         }
-
-        public IList<string> GetInQueueCars()
-        {
-            return service.GetInQueueCars();
-        }
-
-        public IList<string> GetWorkingCars()
-        {
-            return service.GetWorkingCars();
-        }
-
-        public IList<string> GetReadyCars()
-        {
-            return service.GetOutQueueCars();
-        }
-
+        
         ~MaintenanceServiceWrapper()
         {
             service.RemoveHandler(Handler);

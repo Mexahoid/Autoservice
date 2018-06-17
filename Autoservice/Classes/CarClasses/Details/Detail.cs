@@ -11,6 +11,7 @@ namespace Autoservice.Classes.CarClasses.Details
     public abstract class Detail
     {
         protected Random R;
+        private static readonly object locker = new object();
 
         public event Action SomethingChanged;
 
@@ -40,7 +41,7 @@ namespace Autoservice.Classes.CarClasses.Details
         /// <returns>Возвращает логическое значение.</returns>
         public bool HasFlaw()
         {
-            lock(new object())
+            lock(locker)
                 return Flaw != null;
         }
 
@@ -52,10 +53,10 @@ namespace Autoservice.Classes.CarClasses.Details
         /// <summary>
         /// Установить поломку для детали.
         /// </summary>
-        public void TrySetRandomFlaw()
+        public bool TrySetRandomFlaw()
         {
             if (Flaw != null)
-                return;
+                return false;
             // Подождать 20 мс., чтобы рандом был настоящим.
             Thread.Sleep(20);
             if (R.Next(0, 1000) < Convert.ToInt32(DetailType))
@@ -64,17 +65,16 @@ namespace Autoservice.Classes.CarClasses.Details
             }
             if (Flaw != null)
                 SomethingChanged?.Invoke();
+            return true;
         }
 
         /// <summary>
         /// Возвращает степень поломки.
         /// </summary>
         /// <returns>Возвращает Significance.</returns>
-        public Significance GetFlawSignificance()
+        public Significance? GetFlawSignificance()
         {
-            if (Flaw == null)
-                throw new Exception("Flaw пустое, внезапная проблема.");
-            return Flaw.FlawLevel;
+            return Flaw?.FlawLevel;
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Autoservice.Classes.CarClasses.Details
         /// </summary>
         public void FixFlaw()
         {
-            lock (new object())
+            lock (locker)
             {
                 Thread.Sleep((int) Flaw.FlawLevel / 40 * (int) DetailType);
                 Flaw = null;

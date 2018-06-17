@@ -225,7 +225,8 @@ namespace Autoservice.Classes
             lock (locker)
             {
                 Thread.Sleep(20);
-                int random = rand.Next(0, services.Count * 10) / 10;
+                int rnd = rand.Next(0, services.Count * 60);
+                int random = rnd / 60;
                 return services.Count == 0 ? null : services[random];
             }
         }

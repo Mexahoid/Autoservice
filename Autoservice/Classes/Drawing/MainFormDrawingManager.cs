@@ -14,7 +14,8 @@ namespace Autoservice.Classes.Drawing
     public class MainFormDrawingManager : DrawingManager
     {
         private static MainFormDrawingManager _instance;
-        
+        private static readonly object locker = new object();
+
         private MainFormDrawingManager()
         {
             Drawers = new List<IDrawable>();
@@ -28,7 +29,7 @@ namespace Autoservice.Classes.Drawing
 
         public override Bitmap GetImage()
         {
-            lock (new object())
+            lock (locker)
             {
                 return Resources.service;
             }

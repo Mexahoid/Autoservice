@@ -27,6 +27,7 @@ namespace Autoservice.Classes
         /// Экземпляр синглтона Manager.
         /// </summary>
         private static Manager _instance;
+        private static readonly object locker = new object();
 
         public event Action<List<string>> NewClient;
 
@@ -165,7 +166,7 @@ namespace Autoservice.Classes
         public static Manager GetInstance()
         {
             // Это защита от разрывания потоками.
-            lock (new object())
+            lock (locker)
                 // То же самое, что и if (instance == null) 
                 // instance = new Manager(); return instance;
                 return _instance ?? (_instance = new Manager());
@@ -187,7 +188,7 @@ namespace Autoservice.Classes
         /// <returns>Возвращает экземпляр Car.</returns>
         public Car AssembleCar()
         {
-            lock (new object())
+            lock (locker)
             {
                 IList<Detail> details = new List<Detail>
                 {
@@ -219,7 +220,7 @@ namespace Autoservice.Classes
         /// <returns>Возвращает экземпляр MaintenanceService.</returns>
         public MaintenanceService GetRandomService()
         {
-            lock (new object())
+            lock (locker)
             {
                 Thread.Sleep(20);
                 int random = rand.Next(0, services.Count * 10) / 10;

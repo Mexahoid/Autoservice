@@ -11,7 +11,8 @@ namespace Autoservice.Classes.Drawing
     public class CarFormDrawingManager : DrawingManager
     {
         private static CarFormDrawingManager _instance;
-        
+        private static readonly object locker = new object();
+
 
         private CarFormDrawingManager()
         {
@@ -30,7 +31,7 @@ namespace Autoservice.Classes.Drawing
 
         public override Bitmap GetImage()
         {
-            lock (new object())
+            lock (locker)
             {
                 return Resources.car;
             }

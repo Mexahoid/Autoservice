@@ -17,6 +17,8 @@ namespace Autoservice.Classes.CarClasses
         /// </summary>
         private readonly IList<Detail> details;
 
+        private bool? paused;
+
         private int counter;
 
         /// <summary>
@@ -37,9 +39,23 @@ namespace Autoservice.Classes.CarClasses
             isEnabled = true;
         }
 
-        public void Start()
+        public void ThreadWork()
         {
-            carThread.Start();
+            switch (paused)
+            {
+                case true:
+                    carThread.Resume();
+                    paused = false;
+                    break;
+                case false:
+                    carThread.Suspend();
+                    paused = true;
+                    break;
+                case null:
+                    carThread.Start();
+                    paused = false;
+                    break;
+            }
         }
 
         /// <summary>
@@ -100,6 +116,8 @@ namespace Autoservice.Classes.CarClasses
         public void Disable(Client c)
         {
             isEnabled = false;
+            if (paused == true)
+                ThreadWork();
         }
 
         public Bitmap GetImage()

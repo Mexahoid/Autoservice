@@ -60,7 +60,11 @@ namespace Autoservice.Forms
 
         private void ctrlTSMIStart_Click(object sender, EventArgs e)
         {
-            manager.Start();
+            manager.ThreadWork();
+            if (ctrlTSMIStart.Text == "Старт" || ctrlTSMIStart.Text == "Продолжить")
+                ctrlTSMIStart.Text = "Пауза";
+            else
+                ctrlTSMIStart.Text = "Продолжить";
         }
 
         private void ctrlTSMIClientBox_Click(object sender, EventArgs e)

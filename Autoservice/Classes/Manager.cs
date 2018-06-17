@@ -27,6 +27,8 @@ namespace Autoservice.Classes
         /// Экземпляр синглтона Manager.
         /// </summary>
         private static Manager _instance;
+
+        private bool threading;
         private static readonly object locker = new object();
 
         public event Action<List<string>> NewClient;
@@ -134,16 +136,16 @@ namespace Autoservice.Classes
             }
         }
 
-        public void Start()
+        public void ThreadWork()
         {
             foreach (Client client in clients)
             {
-                client.Start();
+                client.ThreadWork();
             }
 
             foreach (MaintenanceService maintenanceService in services)
             {
-                maintenanceService.Start();
+                maintenanceService.ThreadWork();
             }
         }
 

@@ -23,6 +23,8 @@ namespace Autoservice.Classes.Service
         public string Name { get; }
 
         private static readonly object locker = new object();
+
+        private bool? paused;
         /// <summary>
         /// Перечень услуг и цен.
         /// </summary>
@@ -48,6 +50,7 @@ namespace Autoservice.Classes.Service
         {
             Name = name;
             serviceWorking = true;
+            paused = null;
 
             maintenances = new List<Tuple<Maintenance, int>>();
             threadWorkers = new Thread[workers];
@@ -59,11 +62,28 @@ namespace Autoservice.Classes.Service
             outputCarList = new List<Car>();
         }
 
-        public void Start()
+        public void ThreadWork()
         {
+            Action<Thread> work = null;
+                switch (paused)
+                {
+                    case true:
+                        work = t => t.Resume();
+                        paused = false;
+                    break;
+                    case false:
+                        work = t => t.Suspend();
+                        paused = true;
+                    break;
+                    case null:
+                        work = t => t.Start();
+                        paused = false;
+                    break;
+                }
+
             foreach (Thread threadWorker in threadWorkers)
             {
-                threadWorker.Start();
+                work?.Invoke(threadWorker);
             }
         }
 
@@ -211,6 +231,8 @@ namespace Autoservice.Classes.Service
         public void Disable(Manager m)
         {
             serviceWorking = false;
+            if (paused == true)
+                ThreadWork();
         }
 
         public bool CanFixAtLeastSomething(Car c)

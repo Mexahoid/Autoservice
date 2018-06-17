@@ -12,6 +12,8 @@ namespace Autoservice.Classes
         public Car Car { get; }
         public string Name { get; }
 
+        private bool? paused;
+
         public string ServiceCarIn { get; set; }
 
         private readonly Thread clientThread;
@@ -22,6 +24,7 @@ namespace Autoservice.Classes
         {
             Car = car;
             Name = name;
+            paused = null;
             clientThread = new Thread(Act);
             var r = new Random(DateTime.Now.Date.DayOfYear + 100);
             Thread.Sleep(20);
@@ -29,10 +32,24 @@ namespace Autoservice.Classes
             clientActive = true;
         }
 
-        public void Start()
+        public void ThreadWork()
         {
-            clientThread.Start();
-            Car.Start();
+            switch (paused)
+            {
+                case true:
+                    clientThread.Resume();
+                    paused = false;
+                    break;
+                case false:
+                    clientThread.Suspend();
+                    paused = true;
+                    break;
+                case null:
+                    clientThread.Start();
+                    paused = false;
+                    break;
+            }
+            Car.ThreadWork();
         }
 
         private void Act()
@@ -84,6 +101,8 @@ namespace Autoservice.Classes
         public void Disable(Manager m)
         {
             clientActive = false;
+            if(paused == true)
+                ThreadWork();
             Car.Disable(this);
         }
     }

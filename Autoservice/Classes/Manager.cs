@@ -69,16 +69,33 @@ namespace Autoservice.Classes
             };
         }
 
-
+        public void AddHandler(Action<List<String>> handler)
+        {
+            NewClient += handler;
+        }
+        public void RemoveHandler(Action<List<String>> handler)
+        {
+            NewClient -= handler;
+        }
+        
         public void ShowClients()
         {
             using (var f = new ClientsForm())
             {
-                var rows = 
-                    clients.Select(client => 
-                        $"Клиент: {client.Name}{(client.ServiceCarIn == null ? "" : $" - Находится в сервисе {client.ServiceCarIn}")}").ToList();
-                NewClient?.Invoke(rows);
+                InvokeClientsChange();
                 f.ShowDialog();
+            }
+        }
+
+        private void InvokeClientsChange()
+        {
+            lock(locker)
+            {
+                var rows =
+                    clients.Select(client =>
+                            $"Клиент: {client.Name}{(client.ServiceCarIn == null ? "" : $" - Находится в сервисе {client.ServiceCarIn}")}")
+                        .ToList();
+                NewClient?.Invoke(rows);
             }
         }
 
@@ -211,7 +228,7 @@ namespace Autoservice.Classes
         /// </summary>
         public int MakeClient()
         {
-            clients.Add(new Client(AssembleCar(), cnFactory.GetRandomName()));
+            clients.Add(new Client(AssembleCar(), cnFactory.GetRandomName(), InvokeClientsChange));
             return clients.Count;
         }
         

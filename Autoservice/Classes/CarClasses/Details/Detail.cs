@@ -10,7 +10,7 @@ namespace Autoservice.Classes.CarClasses.Details
     /// </summary>
     public abstract class Detail
     {
-        protected Random R;
+        protected static Random R = new Random(DateTime.UtcNow.Millisecond + 2000);
         private static readonly object locker = new object();
 
         public event Action SomethingChanged;
@@ -32,7 +32,6 @@ namespace Autoservice.Classes.CarClasses.Details
         protected Detail(DetailType type)
         {
             DetailType = type;
-            R = new Random(DateTime.UtcNow.Millisecond + (int)DetailType);
         }
 
         /// <summary>

@@ -17,18 +17,19 @@ namespace Autoservice.Classes
         public string ServiceCarIn { get; set; }
 
         private readonly Thread clientThread;
-        private readonly int treshold;
+        private event Action SomethingChanged;
         private bool clientActive;
 
-        public Client(Car car, string name)
+        public Client(Car car, string name, Action handlerAction)
         {
             Car = car;
             Name = name;
+            SomethingChanged += handlerAction;
             paused = null;
             clientThread = new Thread(Act);
             var r = new Random(DateTime.Now.Date.DayOfYear + 100);
             Thread.Sleep(20);
-            treshold = r.Next(0, 70) / 10 + 1;
+            //treshold = r.Next(0, 70) / 10 + 1;
             clientActive = true;
         }
 
@@ -76,9 +77,12 @@ namespace Autoservice.Classes
                     if (service == null)
                         continue;
 
+                    
                     if (!service.CanFixAtLeastSomething(Car))
                         continue;
                     ServiceCarIn = service.Name;
+
+                    SomethingChanged?.Invoke();
                     service.AddCar(Car);
                     
                     Car.IsWorking = false;

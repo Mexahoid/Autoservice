@@ -16,7 +16,7 @@ namespace Autoservice.Forms
         public ClientsForm()
         {
             InitializeComponent();
-            Manager.GetInstance().NewClient += UpdateDgv;
+            Manager.GetInstance().AddHandler(UpdateDgv);
         }
 
         private void UpdateDgv(List<string> clients)
@@ -34,7 +34,7 @@ namespace Autoservice.Forms
 
         private void ClientsForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Manager.GetInstance().NewClient -= UpdateDgv;
+            Manager.GetInstance().RemoveHandler(UpdateDgv);
         }
 
         private void ctrlDGVClients_CellClick(object sender, DataGridViewCellEventArgs e)

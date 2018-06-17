@@ -9,14 +9,16 @@ namespace Autoservice.Classes
     public class Client
     {
         public Car.Car Car { get; }
+        public string Name { get; }
 
         private readonly Thread clientThread;
         private readonly int treshold;
         private bool clientActive;
 
-        public Client(Car.Car car)
+        public Client(Car.Car car, string name)
         {
             Car = car;
+            Name = name;
             clientThread = new Thread(Act);
             var r = new Random(DateTime.Now.Date.DayOfYear + 100);
             Thread.Sleep(20);
@@ -40,9 +42,10 @@ namespace Autoservice.Classes
 
 
                     var list = Car.GetBrokenDetails();
+                    Thread.Sleep(2000);
 
-                    if (list.Count < treshold)
-                        continue;
+                    //if (list.Count < treshold)
+                    //    continue;
 
                     bool canBeFixed = false;
                     service = Manager.GetInstance().GetRandomService();

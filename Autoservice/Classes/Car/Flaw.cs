@@ -26,7 +26,7 @@ namespace Autoservice.Classes.Car
         
         public Flaw(DetailType detail)
         {
-            var r = new Random(DateTime.UtcNow.Day);
+            var r = new Random(DateTime.UtcNow.Millisecond + 1000);
             // Подождать 20 мс., чтобы рандом был настоящим.
             Thread.Sleep(20);
             // От 0 до 200 - мелкая, от 400 до 200 - обычная etc.
@@ -36,19 +36,19 @@ namespace Autoservice.Classes.Car
             switch (FlawLevel)
             {
                 case Significance.Minor:
-                    Comment = "Небольшая поломка. Легко и дешево починить.";
+                    Comment = "Почти в порядке.";
                     break;
                 case Significance.Average:
-                    Comment = "Средняя поломка, необходимо немного времени и денег на починку.";
+                    Comment = "Средне.";
                     break;
                 case Significance.Serious:
-                    Comment = "Серьезная поломка. Требуется много времени и относительно много средств.";
+                    Comment = "Серьезно.";
                     break;
                 case Significance.Critical:
-                    Comment = "Поломка на грани жизни и смерти. Необходимо очень много средств и времени на починку.";
+                    Comment = "Очень серьезно.";
                     break;
                 case Significance.Fatal:
-                    Comment = "Фатальная поломка. Дешевле выкинуть и купить новую.";
+                    Comment = "Фатально.";
                     break;
             }
 

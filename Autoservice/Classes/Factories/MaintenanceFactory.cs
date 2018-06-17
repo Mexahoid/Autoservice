@@ -19,7 +19,7 @@ namespace Autoservice.Classes.Factories
         {
             dictionary = new Dictionary<Tuple<DetailType, Significance>, string>();
 
-            rand = new Random(DateTime.UtcNow.Minute + GetHashCode());
+            rand = new Random(DateTime.UtcNow.Second + GetHashCode());
 
             InitMinorMaintetances();
             InitAverageMaintetances();
@@ -56,6 +56,7 @@ namespace Autoservice.Classes.Factories
             int randPos = rand.Next(0, keys.Count * 10) / 10;
             var enumerator = keys.GetEnumerator();
             int i = 0;
+            enumerator.MoveNext();
             while (i++ < randPos)
                 enumerator.MoveNext();
             var tuple = enumerator.Current;
@@ -89,7 +90,7 @@ namespace Autoservice.Classes.Factories
         {
             dictionary.Add(Tuple.Create(DetailType.Brakes, Significance.Serious), "Восстановление тормозных дисков");
             dictionary.Add(Tuple.Create(DetailType.Chassis, Significance.Serious), "Замена колес");
-            dictionary.Add(Tuple.Create(DetailType.Electronics, Significance.Serious), "Восстановление кабелей электроники");
+            dictionary.Add(Tuple.Create(DetailType.Electronics, Significance.Serious), "Восстановление кабелей");
             dictionary.Add(Tuple.Create(DetailType.Engine, Significance.Serious), "Замена системы подачи топлива");
             dictionary.Add(Tuple.Create(DetailType.Hull, Significance.Serious), "Замена стекол");
             dictionary.Add(Tuple.Create(DetailType.Interior, Significance.Serious), "Смена обшивки и наполнителя");

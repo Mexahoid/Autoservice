@@ -1,24 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading;
 using Autoservice.Classes.Car.Details;
+using Autoservice.Classes.Drawing;
 using Autoservice.Enums;
+using Autoservice.Interfaces;
 
 namespace Autoservice.Classes.Car
 {
-    public class Car
+    public class Car : IPositionable
     {
         /// <summary>
         /// Список деталей автомобиля.
         /// </summary>
         private readonly IList<Detail> details;
-
+        
         /// <summary>
         /// Работает ли машина.
         /// </summary>
         public bool IsWorking { get; set; }
 
-        private Thread carThread;
+        private readonly Thread carThread;
 
         private bool isEnabled;
 
@@ -39,6 +43,22 @@ namespace Autoservice.Classes.Car
         {
             // То же самое, что и foreach (var d in details) if(d.HasFlaws()) return true;
             return details.Any(detail => detail.HasFlaw());
+        }
+
+        public void AddHandler(Action signal)
+        {
+            foreach (Detail detail in details)
+            {
+                detail.SomethingChanged += signal;
+            }
+        }
+
+        public void RemoveHandler(Action signal)
+        {
+            foreach (Detail detail in details)
+            {
+                detail.SomethingChanged -= signal;
+            }
         }
 
         /// <summary>
@@ -68,6 +88,11 @@ namespace Autoservice.Classes.Car
         public void Disable(Client c)
         {
             isEnabled = false;
+        }
+
+        public Bitmap GetImage()
+        {
+            return CarFormDrawingManager.GetInstance().GetImage();
         }
     }
 }

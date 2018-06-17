@@ -32,6 +32,8 @@
             this.ctrlTS = new System.Windows.Forms.ToolStrip();
             this.ctrlTSMI_Menu = new System.Windows.Forms.ToolStripDropDownButton();
             this.ctrlTSMIHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctrlTSMIAddClient = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctrlPanel = new System.Windows.Forms.Panel();
             this.ctrlTS.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,7 +51,8 @@
             // 
             this.ctrlTSMI_Menu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.ctrlTSMI_Menu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ctrlTSMIHelp});
+            this.ctrlTSMIHelp,
+            this.ctrlTSMIAddClient});
             this.ctrlTSMI_Menu.Image = ((System.Drawing.Image)(resources.GetObject("ctrlTSMI_Menu.Image")));
             this.ctrlTSMI_Menu.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ctrlTSMI_Menu.Name = "ctrlTSMI_Menu";
@@ -59,18 +62,37 @@
             // ctrlTSMIHelp
             // 
             this.ctrlTSMIHelp.Name = "ctrlTSMIHelp";
-            this.ctrlTSMIHelp.Size = new System.Drawing.Size(123, 22);
+            this.ctrlTSMIHelp.Size = new System.Drawing.Size(173, 22);
             this.ctrlTSMIHelp.Text = "Помощь";
             this.ctrlTSMIHelp.Click += new System.EventHandler(this.ctrlTSMIHelp_Click);
+            // 
+            // ctrlTSMIAddClient
+            // 
+            this.ctrlTSMIAddClient.Name = "ctrlTSMIAddClient";
+            this.ctrlTSMIAddClient.Size = new System.Drawing.Size(173, 22);
+            this.ctrlTSMIAddClient.Text = "Добавить клиента";
+            this.ctrlTSMIAddClient.Click += new System.EventHandler(this.ctrlTSMIAddCLient_Click);
+            // 
+            // ctrlPanel
+            // 
+            this.ctrlPanel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.ctrlPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ctrlPanel.Location = new System.Drawing.Point(0, 25);
+            this.ctrlPanel.Name = "ctrlPanel";
+            this.ctrlPanel.Size = new System.Drawing.Size(800, 425);
+            this.ctrlPanel.TabIndex = 1;
+            this.ctrlPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ctrlPanel_MouseClick);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ctrlPanel);
             this.Controls.Add(this.ctrlTS);
             this.Name = "MainForm";
             this.Text = "Автосервис";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.ctrlTS.ResumeLayout(false);
             this.ctrlTS.PerformLayout();
             this.ResumeLayout(false);
@@ -83,6 +105,8 @@
         private System.Windows.Forms.ToolStrip ctrlTS;
         private System.Windows.Forms.ToolStripDropDownButton ctrlTSMI_Menu;
         private System.Windows.Forms.ToolStripMenuItem ctrlTSMIHelp;
+        private System.Windows.Forms.Panel ctrlPanel;
+        private System.Windows.Forms.ToolStripMenuItem ctrlTSMIAddClient;
     }
 }
 

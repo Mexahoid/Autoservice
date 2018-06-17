@@ -12,11 +12,13 @@ namespace Autoservice.Classes.Car.Details
     {
         protected Random R;
 
+        public event Action SomethingChanged;
+
         /// <summary>
         /// Поломка детали.
         /// </summary>
         protected Flaw Flaw;
-        
+
         /// <summary>
         /// Тип детали.
         /// </summary>
@@ -25,7 +27,7 @@ namespace Autoservice.Classes.Car.Details
         /// <summary>
         /// Конструктор предка Detail.
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="type">Тип детали</param>
         protected Detail(DetailType type)
         {
             DetailType = type;
@@ -38,7 +40,13 @@ namespace Autoservice.Classes.Car.Details
         /// <returns>Возвращает логическое значение.</returns>
         public bool HasFlaw()
         {
-            return Flaw != null;
+            lock(new object())
+                return Flaw != null;
+        }
+
+        public string GetFlawText()
+        {
+            return Flaw.Comment;
         }
 
         /// <summary>
@@ -46,7 +54,7 @@ namespace Autoservice.Classes.Car.Details
         /// </summary>
         public void TrySetRandomFlaw()
         {
-            if (Flaw == null)
+            if (Flaw != null)
                 return;
             // Подождать 20 мс., чтобы рандом был настоящим.
             Thread.Sleep(20);
@@ -54,6 +62,8 @@ namespace Autoservice.Classes.Car.Details
             {
                 Flaw = new Flaw(DetailType);
             }
+            if (Flaw != null)
+                SomethingChanged?.Invoke();
         }
 
         /// <summary>
@@ -62,7 +72,7 @@ namespace Autoservice.Classes.Car.Details
         /// <returns>Возвращает Significance.</returns>
         public Significance GetFlawSignificance()
         {
-            if(Flaw == null)
+            if (Flaw == null)
                 throw new Exception("Flaw пустое, внезапная проблема.");
             return Flaw.FlawLevel;
         }
@@ -72,8 +82,11 @@ namespace Autoservice.Classes.Car.Details
         /// </summary>
         public void FixFlaw()
         {
-            Thread.Sleep((int)Flaw.FlawLevel / 40 * (int)DetailType);
-            Flaw = null;
+            lock (new object())
+            {
+                Thread.Sleep((int) Flaw.FlawLevel / 40 * (int) DetailType);
+                Flaw = null;
+            }
         }
 
 

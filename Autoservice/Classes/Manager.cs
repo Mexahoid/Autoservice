@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Autoservice.Classes.Car.Details;
 using Autoservice.Classes.Factories;
 using Autoservice.Classes.Service;
 using Autoservice.Enums;
+using Autoservice.Forms;
 using Autoservice.Interfaces;
 
 namespace Autoservice.Classes
@@ -32,6 +35,8 @@ namespace Autoservice.Classes
 
         private readonly IList<MaintenanceService> services;
 
+        private readonly ClientNameFactory cnFactory;
+
         private readonly IList<Client> clients;
 
         private readonly Random rand;
@@ -44,7 +49,8 @@ namespace Autoservice.Classes
             mFactory = new MaintenanceFactory();
             services = new List<MaintenanceService>();
             clients = new List<Client>();
-            rand = new Random(DateTime.Today.Month);
+            cnFactory = new ClientNameFactory();
+            rand = new Random(DateTime.Today.Millisecond - 200);
             factories = new List<IDetailFactory>
             {
                 new EngineFactory(),
@@ -58,32 +64,52 @@ namespace Autoservice.Classes
 
 
         /// <summary>
-        /// Удаляет все сервисы.
+        /// Удаляет все сервисы и клиентов.
         /// </summary>
-        public void StopServices()
+        public void Stop()
         {
             foreach (MaintenanceService maintenanceService in services)
             {
                 maintenanceService.Disable(this);
             }
             services.Clear();
+
+            foreach (Client client in clients)
+            {
+                client.Disable(this);
+            }
+            clients.Clear();
         }
 
         /// <summary>
         /// Добавляет новый сервис.
         /// </summary>
-        /// <param name="name">Название сервиса.</param>
-        /// <param name="workers">Количество потоков обработки машин.</param>
-        /// <param name="offers">Количество услуг.</param>
-        public void AddService(string name, int workers, int offers)
+        public MaintenanceService AddService()
         {
-            services.Add(new MaintenanceService(name, workers));
-            for (int i = 0; i < offers; i++)
+            using (var f = new ServiceCreateForm())
             {
-                services[services.Count - 1].AddMaintenance(mFactory.GetRandomMaintenance());
+                if (f.ShowDialog() != DialogResult.OK)
+                    return null;
+                services.Add(new MaintenanceService(f.ServiceName, f.Workers));
+                for (int i = 0; i < f.Offers; i++)
+                {
+                    services[services.Count - 1].AddMaintenance(mFactory.GetRandomMaintenance());
+                }
+                return services[services.Count - 1];
             }
         }
 
+
+        public void InvokeMaintenanceForm(int pos)
+        {
+            if (pos == -1 || pos >= services.Count)
+                return;
+
+            using (var f = new ServiceForm(services[pos]))
+            {
+                f.ShowDialog();
+            }
+        }
 
         /// <summary>
         /// Возвращает экземпляр Manager.
@@ -135,9 +161,16 @@ namespace Autoservice.Classes
         /// </summary>
         public void MakeClient()
         {
-            clients.Add(new Client(AssembleCar()));
+            clients.Add(new Client(AssembleCar(), cnFactory.GetRandomName()));
         }
 
+
+        public int[] GetDims(MaintenanceService ms)
+        {
+            int[] ret = new int[4];
+
+            return ret;
+        }
 
         /// <summary>
         /// Возвращает случайный сервис.

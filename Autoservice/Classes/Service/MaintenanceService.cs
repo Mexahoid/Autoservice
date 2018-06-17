@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading;
 using Autoservice.Classes.Car.Details;
+using Autoservice.Classes.Drawing;
 using Autoservice.Enums;
+using Autoservice.Interfaces;
 
 namespace Autoservice.Classes.Service
 {
     /// <summary>
     /// Класс сервиса по починке деталей.
     /// </summary>
-    public class MaintenanceService
+    public class MaintenanceService : IPositionable
     {
         /// <summary>
         /// Название сервиса.
@@ -49,6 +52,18 @@ namespace Autoservice.Classes.Service
             }
             inputCarQueue = new Queue<Car.Car>();
             outputCarList = new List<Car.Car>();
+        }
+
+        public IList<string> GetMaintenances()
+        {
+            List<string> names = new List<string>();
+            lock (new object())
+            {
+                names.AddRange(maintenances.Select(maintenance => 
+                    $"{maintenance.Item1.Name} - {maintenance.Item2} у.е."));
+            }
+
+            return names;
         }
 
         /// <summary>
@@ -160,6 +175,21 @@ namespace Autoservice.Classes.Service
         public void Disable(Manager m)
         {
             serviceWorking = false;
+        }
+
+        public Bitmap GetImage()
+        {
+            return MainFormDrawingManager.GetInstance().GetImage();
+        }
+
+        public void AddHandler(Action signal)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveHandler(Action signal)
+        {
+            throw new NotImplementedException();
         }
     }
 }
